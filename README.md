@@ -144,3 +144,5 @@ example of a proper main.js
 
 In order to have RequireJS properl loading modules you'd read [requireJS documentation](http://www.requirejs.org/) to configure the paths
 
+#Thanks
+To all the guys that helped me creating ākāśe with their inspiration or making me copy their ideas: [Marco Pracucci](https://github.com/pracucci), [Rocco Zanni](https://github.com/roccozanni), [Luca Lischetti](https://github.com/sirlisko), [Rocco Curcio](https://github.com/jsDotCr)
