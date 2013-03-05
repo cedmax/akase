@@ -75,17 +75,13 @@ The sandbox API should be defined/extended by you, the only API available out of
 	- eventName(s) _String|Array[String]_ - the event(s) the module will subscribe to
 	- callback _Function_ - the callback to be invoked (the payload will be injected as argument)<br/><br/>
 
-- renders a mustache template (Mustache required)
+- namespace your own Api
 		
-		sandbox.api.render(template, data)
-
-	Parameters: 
-	- template _String_ - the template as an inlined string
-	- data _Object_ - the data to build the template with<br/><br/>
+		sandbox.api
 
 
 ## Setup & Core
-Everything gets started in a proper requireJS way
+Everything gets started in a proper RequireJS way
 
 	<script data-main="main.js" src="/assets/javascripts/require.js"></script>
 
@@ -142,7 +138,10 @@ example of a proper main.js
 
 	});
 
-In order to have RequireJS properl loading modules you'd read [requireJS documentation](http://www.requirejs.org/) to configure the paths
+In order to have RequireJS proper loading modules you'd read [RequireJS documentation](http://www.requirejs.org/) to configure the paths
+
+## Todo
+update RequireJS version (2.1.1 -> latest)
 
 #Thanks
 To all the guys that helped me creating ākāśe with their inspiration or making me copy their ideas: [Marco Pracucci](https://github.com/pracucci), [Rocco Zanni](https://github.com/roccozanni), [Luca Lischetti](https://github.com/sirlisko), [Rocco Curcio](https://github.com/jsDotCr)

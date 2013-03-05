@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8'>
+		<title>javascript unit tests...</title>
+		<link rel="stylesheet" href="http://code.jquery.com/qunit/git/qunit.css"/>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="http://code.jquery.com/qunit/git/qunit.js"></script>
+	</head>
+	<body>
+		<h1 id="qunit-header">sandbox tests</h1>
+		<h2 id="qunit-banner"></h2>
+		<h2 id="qunit-userAgent"></h2>
+
+		<ol id="qunit-tests"></ol>
+
+
+		<script>
+			var require = {
+				baseUrl: "../lib"
+			}
+		</script>
+		<script data-main="../tests/sandboxTest.js" src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.4/require.min.js"></script>
+	</body>
+</html>
