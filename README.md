@@ -113,7 +113,8 @@ the core exposes 3 methods in order to:
 	- moduleId (String) - the name of the module<br/><br/>
 
 - broadcast events into the architecture, it works as the sandbox.publish
-	notify(event, payload)
+
+		notify(event, payload)
 	
 	Parameters: 
 	- eventName _String_ - the name of the event 
