@@ -14,7 +14,7 @@ require(['sandbox'], function(Sandbox){
 		var a = 0;
 
 		sandbox.subscribe('testNotify', function(){
-			a = 1;
+			a = 2;
 		});
 
 		sandbox.publish('testNotify');

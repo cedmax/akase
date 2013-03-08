@@ -256,7 +256,7 @@ require(['akase'], function(core){
 				};
 			};
 		});
-		
+
 		require(['name1'], function(){
 			core.start('name1');
 			core.notify('Hello from name2', true);
@@ -302,7 +302,7 @@ require(['akase'], function(core){
 		});
 	});
 
-	asyncTest('startWhen should load a module when a specific event is published', 2, function(){
+	asyncTest('start with event parameter should load a module when a specific event is published', 4, function(){
 		define('name3', function(){
 			return function(){
 				return {
@@ -319,27 +319,40 @@ require(['akase'], function(core){
 			return function(){
 				return {
 					init: function(c){
-						ok(!c.prop1, 'module loaded');
+						ok(!c.prop, 'inline configuration is available');
 					}
 				};
 			};
 		});
 
-		core.start('name4', { config: { prop1: false }, event: 'another_event_Name'});
+		core.start('name4', { config: { prop: false }, event: 'another_event_Name'});
 
 		define('name5', function(){
 			return function(){
 				return {
 					init: function(c){
-						ok(c.prop1, 'module loaded');
+						ok(c.prop1, 'event payload is the configuration');
+					}
+				};
+			};
+		});
+
+		core.start('name5', { event: 'another_event_Name'});
+
+		define('name6', function(){
+			return function(){
+				return {
+					init: function(c){
+						ok(c.prop2, 'both inline config and event payload are available as configuration');
+						ok(c.prop1, 'event payload overrides default configuration');
 						start();
 					}
 				};
 			};
 		});
 
-		core.start('name5', { config: { prop1: true }, event: 'another_event_Name'});
-		core.notify('another_event_Name');
+		core.start('name6', { config: { prop1: false, prop2: true }, event: 'another_event_Name'});
+		core.notify('another_event_Name', { prop1: true });
 	});
 
 });
