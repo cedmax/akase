@@ -1,10 +1,13 @@
 # ākāśe v.0.1
 
-ākāśe (sanskrit for "in the sky"/"to the sky") is a small decoupled, event-driven architecture framework.  
+ākāśe (sanskrit for "in the sky"/"to the sky") is a small decoupled, event-driven architecture framework.
 It is based on Nicholas Zakas [Scalable Javascript Application Architecture](http://www.slideshare.net/nzakas/scalable-javascript-application-architecture-2012) and [RequireJS and AMD](http://www.slideshare.net/iivanoo/requirejs-12937421).
 
+## Build Status
+[![Build Status](https://travis-ci.org/cedmax/akase.png?branch=master)](https://travis-ci.org/cedmax/akase)
+
 ## Concepts
-The concepts of the framework are well represented by the two presentations linked above.  
+The concepts of the framework are well represented by the two presentations linked above.
 Basically everything gets sandboxed and everyone is happy.
 
 
@@ -57,26 +60,26 @@ The sandbox API should be defined/extended by you, the only API available out of
 
 - access the module name
 
-		sandbox.module 	
+		sandbox.module
 
-- publish an event through the whole architecture  
+- publish an event through the whole architecture
 
 		sandbox.publish(eventName, payload)
-	
-	Parameters: 
-	- eventName _String_ - the name of the event 
+
+	Parameters:
+	- eventName _String_ - the name of the event
 	- payload _Object_ - the optional payload to be sent to the subscribing modules<br/><br/>
 
 - subscribe to an event
 
 		sandbox.subscribe(eventName(s), callback)
-	
-	Parameters: 
+
+	Parameters:
 	- eventName(s) _String|Array[String]_ - the event(s) the module will subscribe to
 	- callback _Function_ - the callback to be invoked (the payload will be injected as argument)<br/><br/>
 
 - namespace your own Api
-		
+
 		sandbox.api
 
 
@@ -94,7 +97,7 @@ The main file should require ākāśe core lib in order to take advantage of the
 
 
 the core exposes 3 methods in order to:
-	
+
 - load and initialize a module
 
 		start(moduleId, options)
@@ -106,7 +109,7 @@ the core exposes 3 methods in order to:
 		- event _String_ - an event that drives the module start<br/><br/>
 
 - stop and undefine the module (next start will reload the resource)
-	
+
 		stop(moduleId)
 
 	Parameters:
@@ -115,9 +118,9 @@ the core exposes 3 methods in order to:
 - broadcast events into the architecture, it works as the sandbox.publish
 
 		notify(event, payload)
-	
-	Parameters: 
-	- eventName _String_ - the name of the event 
+
+	Parameters:
+	- eventName _String_ - the name of the event
 	- payload _Object_ - the optional payload to be sent to the subscribing modules<br/><br/>
 
 
