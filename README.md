@@ -1,4 +1,4 @@
-# ākāśe v.0.1 [![Build Status](https://travis-ci.org/cedmax/akase.png?branch=master)](https://travis-ci.org/cedmax/akase)
+# ākāśe [![Build Status](https://travis-ci.org/cedmax/akase.png?branch=master)](https://travis-ci.org/cedmax/akase)
 
 ākāśe (sanskrit for "in the sky"/"to the sky") is a small decoupled, event-driven architecture framework.
 It is based on Nicholas Zakas [Scalable Javascript Application Architecture](http://www.slideshare.net/nzakas/scalable-javascript-application-architecture-2012) and [RequireJS and AMD](http://www.slideshare.net/iivanoo/requirejs-12937421).
@@ -6,7 +6,6 @@ It is based on Nicholas Zakas [Scalable Javascript Application Architecture](htt
 ## Concepts
 The concepts of the framework are well represented by the two presentations linked above.
 Basically everything gets sandboxed and everyone is happy.
-
 
 ## Modules & Sandbox
 The modules you will have to create are proper AMD modules with this skeleton
