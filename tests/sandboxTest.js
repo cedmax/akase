@@ -19,7 +19,7 @@ require(['sandbox'], function(Sandbox){
 
 		sandbox.publish('testNotify');
 
-		equal(a, 1, 'notification works');
+		equal(a, 2, 'notification works');
 	});
 
 	test('notify with a payload', 1, function() {

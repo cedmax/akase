@@ -1,0 +1,28 @@
+{
+  "name": "ākāśe",
+  "description": "ākāśe (sanskrit for \"in the sky\"/\"to the sky\") is a small decoupled, event-driven architecture framework.",
+  "version": "1.0.0",
+  "homepage": "https://github.com/cedmax/akase",
+  "author": {
+    "name": "cedmax",
+    "email": "marco@cedmax.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cedmax/akase.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cedmax/akase/issues"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-qunit-amd": "0.0.3",
+    "grunt": "~0.4.1"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.1"
+  }
+}
