@@ -10,47 +10,51 @@ Basically everything gets sandboxed and everyone is happy.
 ## Modules & Sandbox
 The modules you will have to create are proper AMD modules with this skeleton
 
+```js
+define(function(){
+    'use strict';
 
-    define(function(){
-    	'use strict';
+    return function(sandbox){
 
-    	return function(sandbox){
+		//the logic of the module
+		function doSomething(){
+			//do something
+		}
+	
+		return {
+	 		init:function(config){
+	                //the initialization code
+	    		sandbox.subscribe('myEventName', doSomething)
+			},
+	        destroy: function(){
+	    	    //optional destroy method, useful to remove callbacks from DOM event
+	        }
+	    };
 
-        	//the logic of the module
-			function doSomething(){
-				//do something
-			}
-
-            return {
-                init:function(config){
-                    //the initialization code
-                    sandbox.subscribe('myEventName', doSomething)
-                },
-                destroy: function(){
-            	    //optional destroy method, useful to remove callbacks from DOM event
-                }
-            };
-        };
-    });
+	};
+});
+```
 
 As in the example, every module has access to the sandbox, which is supposed to be the only external api accessible, but no one forces you not to require a framework (watch out that you are coupling your code with that specific framework, just saying)
 
-    define(['jQuery'], function($){
-        'use strict';
+```js
+define(['jQuery'], function($){
+    'use strict';
 
-        return function(sandbox){
+    return function(sandbox){
 
-			function doSomething(){
-				//do something
-			}
+		function doSomething(){
+			//do something
+		}
 
-            return {
-                init:function(config){
-                	$('#myElm').on('click', doSomething);
-                }
-            };
+        return {
+            init:function(config){
+            	$('#myElm').on('click', doSomething);
+            }
         };
-    });
+    };
+});
+```
 
 The sandbox API should be defined/extended by you, the only API available out of the box allows to:
 
@@ -122,21 +126,23 @@ the core exposes 3 methods in order to:
 
 example of a proper main.js
 
-	require(['akase'], function(core) {
+```js
+require(['akase'], function(core) {
 
-		var audio  = document.createElement("audio"),
-		canPlayMP3 = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/mpeg") !== "");
+	var audio  = document.createElement("audio"),
+	canPlayMP3 = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/mpeg") !== "");
 
-		core.start("module1", {
-			config: {
-				hasMp3Support: canPlayMP3
-			}
-		});
-
-		core.start("module2");
-		core.start("module3", { event: "audio:stop" });
-
+	core.start("module1", {
+		config: {
+			hasMp3Support: canPlayMP3
+		}
 	});
+
+	core.start("module2");
+	core.start("module3", { event: "audio:stop" });
+
+});
+```
 
 In order to have RequireJS proper loading modules you'd read [RequireJS documentation](http://www.requirejs.org/) to configure the paths
 
