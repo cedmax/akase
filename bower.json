@@ -1,0 +1,10 @@
+{
+  "name": "akase",
+  "version": "1.0.0",
+  "main": "dist/akase.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ]
+}
