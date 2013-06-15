@@ -5,7 +5,7 @@ It is based on Nicholas Zakas [Scalable Javascript Application Architecture](htt
 
 ## Concepts
 The concepts of the framework are well represented by the two presentations linked above.
-Basically everything gets sandboxed and everyone is happy.
+Basically everything gets sandboxed and everyone is happy. ([play with it](https://github.com/cedmax/akase-playground))
 
 ## Modules & Sandbox
 The modules you will have to create are proper AMD modules with this skeleton
