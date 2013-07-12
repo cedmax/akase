@@ -20,7 +20,7 @@ define(function(){
 		function doSomething(){
 			//do something
 		}
-	
+
 		return {
 	 		init:function(config){
 	                //the initialization code
@@ -145,9 +145,6 @@ require(['akase'], function(core) {
 ```
 
 In order to have RequireJS proper loading modules you'd read [RequireJS documentation](http://www.requirejs.org/) to configure the paths
-
-## Todo
-update RequireJS version (2.1.1 -> latest)
 
 #Thanks
 To all the guys that helped me creating ākāśe with their inspiration or making me copy their ideas: [Marco Pracucci](https://github.com/pracucci), [Rocco Zanni](https://github.com/roccozanni), [Luca Lischetti](https://github.com/sirlisko), [Rocco Curcio](https://github.com/jsDotCr)

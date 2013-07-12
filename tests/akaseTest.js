@@ -4,7 +4,7 @@ require(['akase'], function(core){
 	QUnit.start();
 
 	module('core', {
-		tearDown: function(){
+		teardown: function(){
 			core.stop('name');
 			core.stop('name1');
 			core.stop('name2');
