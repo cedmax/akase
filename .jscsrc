@@ -1,0 +1,6 @@
+{
+	"preset": "wordpress",
+	"requireSpaceAfterPrefixUnaryOperators": null,
+	"requireYodaConditions": null,
+	"disallowYodaConditions": true
+}

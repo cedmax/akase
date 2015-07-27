@@ -1,0 +1,21 @@
+{
+  "curly": true,
+  "eqeqeq": true,
+  "immed": true,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "sub": true,
+  "undef": true,
+  "unused": true,
+  "boss": true,
+  "eqnull": true,
+  "browser": true,
+  "globals": {
+    "QUnit": false, 
+    "require": false, 
+    "test": false, 
+    "equal": false,
+    "module": false, "asyncTest": false, "define": false,"ok": false, "start": false
+  }
+}

@@ -3,7 +3,7 @@
   "description": "ākāśe (sanskrit for \"in the sky\"/\"to the sky\") is a small decoupled, event-driven architecture framework.",
   "version": "1.0.0",
   "homepage": "https://github.com/cedmax/akase",
-  "main":"dist/akase.js",
+  "main": "dist/akase.js",
   "author": {
     "name": "cedmax",
     "email": "marco@cedmax.com"
@@ -19,8 +19,8 @@
     "test": "grunt test"
   },
   "devDependencies": {
-    "grunt-contrib-jshint": "~0.1.1",
-    "grunt-qunit-amd": "~0.0.9",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-qunit-amd": "^1.2.3",
     "grunt": "~0.4.1",
     "grunt-contrib-requirejs": "~0.4.1"
   },
