@@ -141,19 +141,23 @@ require(['akase', 'module1', 'module2', 'module3', 'module4'], function(core) {
 
     core.start("module2");
     core.start("module3", { event: "audio:stop" });
-    core.start("module4", { waitForConfig: true})
 });
 ```
 
 *added in v1.1.0*
-module4 in that case would wait for 5 seconds for a global configuration
-
+```js
+    core.start("module4", { waitForConfig: true})
 ```
+in this case the core would wait 5 seconds for a global configuration.
+
+```js
 akase.config['module4'] = {
     productId: 'AGS1241S'
 }
 ```
+before starting `module4`, then it would give up, no error thrown
 
+<br/><br/>
 In order to have RequireJS proper loading modules you'd read [RequireJS documentation](http://www.requirejs.org/) to configure the paths
 
 #Thanks
