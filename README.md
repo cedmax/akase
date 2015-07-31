@@ -106,8 +106,8 @@ the core exposes 3 methods in order to:
     - moduleId _String_ - the name of the module
     - options _Object_ - 2 properties allowed:
         - config _Object_ - a configuration object to be injected in the init of the module
-        - event _String_ - an event that drives the module start<br/><br/>
-        - waitForConfig _Boolean_ - (added in v1.1.0) if true the module would wait until a global object `akase.config.moduleName` is available and will extend the inlined config with it. Useful if you need dynamic data from the page (example below).
+        - event _String_ - an event that drives the module start
+        - waitForConfig _Boolean_ - (added in v1.1.0) if true the module would wait until a global object `akase.config.moduleName` is available and will extend the inlined config with it. Useful if you need dynamic data from the page (example below).<br/><br/>
 
 - stop and undefine the module (next start will reload the resource)
 
