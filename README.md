@@ -16,22 +16,22 @@ define(function(){
 
     return function(sandbox){
 
-		//the logic of the module
-		function doSomething(){
-			//do something
-		}
+        //the logic of the module
+        function doSomething(){
+            //do something
+        }
 
-		return {
-	 		init:function(config){
-	                //the initialization code
-	    		sandbox.subscribe('myEventName', doSomething)
-			},
-	        destroy: function(){
-	    	    //optional destroy method, useful to remove callbacks from DOM event
-	        }
-	    };
+        return {
+            init:function(config){
+                //the initialization code
+                sandbox.subscribe('myEventName', doSomething)
+            },
+            destroy: function(){
+                //optional destroy method, useful to remove callbacks from DOM event
+            }
+        };
 
-	};
+    };
 });
 ```
 
@@ -43,13 +43,13 @@ define(['jQuery'], function($){
 
     return function(sandbox){
 
-		function doSomething(){
-			//do something
-		}
+        function doSomething(){
+            //do something
+        }
 
         return {
             init:function(config){
-            	$('#myElm').on('click', doSomething);
+                $('#myElm').on('click', doSomething);
             }
         };
     };
@@ -60,88 +60,98 @@ The sandbox API should be defined/extended by you, the only API available out of
 
 - access the module name
 
-		sandbox.module
+        sandbox.module
 
 - publish an event through the whole architecture
 
-		sandbox.publish(eventName, payload)
+        sandbox.publish(eventName, payload)
 
-	Parameters:
-	- eventName _String_ - the name of the event
-	- payload _Object_ - the optional payload to be sent to the subscribing modules<br/><br/>
+    Parameters:
+    - eventName _String_ - the name of the event
+    - payload _Object_ - the optional payload to be sent to the subscribing modules<br/><br/>
 
 - subscribe to an event
 
-		sandbox.subscribe(eventName(s), callback)
+        sandbox.subscribe(eventName(s), callback)
 
-	Parameters:
-	- eventName(s) _String|Array[String]_ - the event(s) the module will subscribe to
-	- callback _Function_ - the callback to be invoked (the payload will be injected as argument)<br/><br/>
+    Parameters:
+    - eventName(s) _String|Array[String]_ - the event(s) the module will subscribe to
+    - callback _Function_ - the callback to be invoked (the payload will be injected as argument)<br/><br/>
 
 - namespace your own Api
 
-		sandbox.api
+        sandbox.api
 
 
 ## Setup & Core
 Everything gets started in a proper RequireJS way
 
-	<script data-main="main.js" src="/assets/javascripts/require.js"></script>
+    <script data-main="main.js" src="/assets/javascripts/require.js"></script>
 
 
 The main file should require ākāśe core lib in order to take advantage of the framework
 
-	require(['akase'], function(core) {
-		//[...]
-	});
+    require(['akase'], function(core) {
+        //[...]
+    });
 
 
 the core exposes 3 methods in order to:
 
 - load and initialize a module
 
-		start(moduleId, options)
+        start(moduleId, options)
 
-	Parameters:
-	- moduleId _String_ - the name of the module
-	- options _Object_ - 2 properties allowed:
-		- config _Object_ - a configuration object to be injected in the init of the module
-		- event _String_ - an event that drives the module start<br/><br/>
+    Parameters:
+    - moduleId _String_ - the name of the module
+    - options _Object_ - 2 properties allowed:
+        - config _Object_ - a configuration object to be injected in the init of the module
+        - event _String_ - an event that drives the module start<br/><br/>
+        - waitForConfig _Boolean_ - (added in v1.1.0) if true the module would wait until a global object `akase.config.moduleName` is available and will extend the inlined config with it. Useful if you need dynamic data from the page (example below).
 
 - stop and undefine the module (next start will reload the resource)
 
-		stop(moduleId)
+        stop(moduleId)
 
-	Parameters:
-	- moduleId (String) - the name of the module<br/><br/>
+    Parameters:
+    - moduleId (String) - the name of the module<br/><br/>
 
 - broadcast events into the architecture, it works as the sandbox.publish
 
-		notify(event, payload)
+        notify(event, payload)
 
-	Parameters:
-	- eventName _String_ - the name of the event
-	- payload _Object_ - the optional payload to be sent to the subscribing modules<br/><br/>
+    Parameters:
+    - eventName _String_ - the name of the event
+    - payload _Object_ - the optional payload to be sent to the subscribing modules<br/><br/>
 
 
 example of a proper main.js
 
 ```js
-require(['akase'], function(core) {
+require(['akase', 'module1', 'module2', 'module3', 'module4'], function(core) {
 
-	var audio  = document.createElement("audio"),
-	canPlayMP3 = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/mpeg") !== "");
+    var audio  = document.createElement("audio"),
+    canPlayMP3 = (typeof audio.canPlayType === "function" && audio.canPlayType("audio/mpeg") !== "");
 
-	core.start("module1", {
-		config: {
-			hasMp3Support: canPlayMP3
-		}
-	});
+    core.start("module1", {
+        config: {
+            hasMp3Support: canPlayMP3
+        }
+    });
 
-	core.start("module2");
-	core.start("module3", { event: "audio:stop" });
-
+    core.start("module2");
+    core.start("module3", { event: "audio:stop" });
+    core.start("module4", { waitForConfig: true})
 });
+```
+
+*added in v1.1.0*
+module4 in that case would wait for 5 seconds for a global configuration
+
+```
+akase.config['module4'] = {
+    productId: 'AGS1241S'
+}
 ```
 
 In order to have RequireJS proper loading modules you'd read [RequireJS documentation](http://www.requirejs.org/) to configure the paths

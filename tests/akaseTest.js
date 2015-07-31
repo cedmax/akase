@@ -1,14 +1,14 @@
+/*global akase:true */
+
+akase = { config: {} };
+
 require([ 'akase' ], function( core ) {
 	'use strict';
-
 	QUnit.start();
 
 	module( 'core', {
 		teardown: function() {
-			core.stop( 'name' );
-			core.stop( 'name1' );
-			core.stop( 'name2' );
-			core.stop( 'name3' );
+			core.stop( [ 'name', 'name1', 'name2', 'name3' ] );
 		}
 	});
 
@@ -65,6 +65,41 @@ require([ 'akase' ], function( core ) {
 
 			core.stop( 'name' );
 			ok( !active, 'module stopped' );
+			start();
+		});
+	});
+
+	asyncTest( 'core.stop should take arrays too', 1, function() {
+		var killed = 0;
+
+		define( 'name', function() {
+			return function() {
+				return {
+					init: function() {},
+					destroy: function() {
+						killed += 1;
+					}
+				};
+			};
+		});
+
+		define( 'name1', function() {
+			return function() {
+				return {
+					init: function() {},
+					destroy: function() {
+						killed += 2;
+					}
+				};
+			};
+		});
+
+		require([ 'name', 'name1' ], function() {
+			core.start( 'name' );
+			core.start( 'name1' );
+
+			core.stop([ 'name', 'name1' ]);
+			equal( killed, 3, 'module stopped' );
 			start();
 		});
 	});
@@ -284,6 +319,92 @@ require([ 'akase' ], function( core ) {
 
 	});
 
+	asyncTest( 'module configuration should be injected only if required', 2, function() {
+		akase.config.name = { hello: 'world' };
+
+		define( 'name', function() {
+			return function() {
+				return {
+					init: function( config ) {
+						equal( config.hello, 'world', 'We have access to module specific configuration' );
+					}
+				};
+			};
+		});
+
+		require([ 'name' ], function() {
+			core.start( 'name', { waitForConfig: true });
+			core.stop( 'name' );
+
+			define( 'name', function() {
+				return function() {
+					return {
+						init: function( config ) {
+							equal( config.hello, undefined, 'no configuration should be here' );
+						}
+					};
+				};
+			});
+
+			require([ 'name' ], function() {
+				core.start( 'name' );
+				start();
+			});
+		});
+	});
+
+	asyncTest( 'module configuration could be extended', 2, function() {
+		akase.config.name = { hello: 'world' };
+
+		define( 'name', function() {
+			return function() {
+				return {
+					init: function( config ) {
+						equal( config.anotherConfig, 'aaa', 'config has been extended' );
+						equal( config.hello, 'world', 'configuration is here' );
+					}
+				};
+			};
+		});
+
+		require([ 'name' ], function() {
+			core.start( 'name', { waitForConfig: true, config: { anotherConfig: 'aaa' } });
+
+			start();
+		});
+	});
+
+	asyncTest( 'error management on event notification', 1, function() {
+		define( 'module_with_error', function() {
+			return function( sandbox ) {
+				return {
+					init: function() {
+						sandbox.subscribe( 'wtf', function() {
+							throw new Error( 'happens' );
+						});
+					}
+				};
+			};
+		});
+
+		define( 'module_notifiying', function() {
+			return function( sandbox ) {
+				return {
+					init: function() {
+						sandbox.publish( 'wtf' );
+						ok( true, 'this line gets executed' );
+					}
+				};
+			};
+		});
+
+		require([ 'module_with_error', 'module_notifiying' ], function() {
+			core.start( 'module_with_error' );
+			core.start( 'module_notifiying' );
+			start();
+		});
+	});
+
 	asyncTest( 'module configuration should be able to be injected during start', 1, function() {
 		define( 'name', function() {
 			return function() {
@@ -301,57 +422,72 @@ require([ 'akase' ], function( core ) {
 		});
 	});
 
-	asyncTest( 'start with event parameter should load a module when a specific event is published', 4, function() {
+	asyncTest( 'modules should only be able to access their own configuration', 2, function() {
+		akase.config.name1 = { hello: 'world' };
+
+		define( 'name1', function() {
+			return function() {
+				return {
+					init: function( config ) {
+						equal( config.hello, 'world', 'We have access to module specific configuration' );
+					}
+				};
+			};
+		});
+
+		define( 'name2', function() {
+			return function() {
+				return {
+					init: function( config ) {
+						equal( config.hello, undefined, 'We have access to module specific configuration' );
+					}
+				};
+			};
+		});
+
+		require([ 'name1', 'name2' ], function() {
+			core.start( 'name1', { waitForConfig: true });
+			core.start( 'name2' );
+			start();
+		});
+	});
+
+	asyncTest( 'modules should only be able to access their own configuration and event payload', 2, function() {
+		akase.config.name1 = { hello: 'world', notHello: 'you' };
+
+		define( 'name1', function() {
+			return function() {
+				return {
+					init: function( config ) {
+						equal( config.hello, 'world', 'We have access to module specific configuration' );
+						equal( config.notHello, 'me', 'We have access to module specific configuration' );
+					}
+				};
+			};
+		});
+
+		require([ 'name1' ], function() {
+			core.start( 'name1', { waitForConfig: true, event: 'my_awesome_eventname' });
+			core.notify( 'my_awesome_eventname', { notHello: 'me' });
+			start();
+		});
+	});
+
+	asyncTest( 'startWhen should load a module when a specific event is published', 1, function() {
 		define( 'name3', function() {
 			return function() {
 				return {
 					init: function( c ) {
 						ok( c.prop1, 'module loaded' );
-					}
-				};
-			};
-		});
-
-		core.start( 'name3', { config: { prop1: true }, event: 'event_Name' });
-
-		define( 'name4', function() {
-			return function() {
-				return {
-					init: function( c ) {
-						ok( !c.prop, 'inline configuration is available' );
-					}
-				};
-			};
-		});
-
-		core.start( 'name4', { config: { prop: false }, event: 'another_event_Name' });
-
-		define( 'name5', function() {
-			return function() {
-				return {
-					init: function( c ) {
-						ok( c.prop1, 'event payload is the configuration' );
-					}
-				};
-			};
-		});
-
-		core.start( 'name5', { event: 'another_event_Name' });
-
-		define( 'name6', function() {
-			return function() {
-				return {
-					init: function( c ) {
-						ok( c.prop2, 'both inline config and event payload are available as configuration' );
-						ok( c.prop1, 'event payload overrides default configuration' );
 						start();
 					}
 				};
 			};
 		});
 
-		core.start( 'name6', { config: { prop1: false, prop2: true }, event: 'another_event_Name' });
-		core.notify( 'another_event_Name', { prop1: true });
+		require([ 'name3' ], function() {
+			core.start( 'name3', { config: { prop1: true }, event: 'event_Name' });
+			core.notify( 'event_Name' );
+		});
 	});
-
 });

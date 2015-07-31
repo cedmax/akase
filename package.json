@@ -1,7 +1,7 @@
 {
   "name": "akase",
   "description": "ākāśe (sanskrit for \"in the sky\"/\"to the sky\") is a small decoupled, event-driven architecture framework.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "homepage": "https://github.com/cedmax/akase",
   "main": "dist/akase.js",
   "author": {
