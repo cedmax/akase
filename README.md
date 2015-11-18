@@ -144,18 +144,19 @@ require(['akase', 'module1', 'module2', 'module3', 'module4'], function(core) {
 });
 ```
 
-*added in v1.1.0*
+**Wait for config** (*added in v1.1.0*)
 ```js
     core.start("module4", { waitForConfig: true})
 ```
-in this case the core would wait 5 seconds for a global configuration.
+In this case the core would wait for a global configuration on the global `akase` object before starting `module4`. 
+Very useful if you need to pass dynamic data from the page rendered by the server to the application.
 
 ```js
 akase.config['module4'] = {
     productId: 'AGS1241S'
 }
 ```
-before starting `module4`, then it would give up, no error thrown
+The core is re-checking for 5 seconds and then give up, no error thrown.
 
 <br/><br/>
 In order to have RequireJS proper loading modules you'd read [RequireJS documentation](http://www.requirejs.org/) to configure the paths
